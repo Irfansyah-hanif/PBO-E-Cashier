@@ -3,9 +3,10 @@ import React, { useState } from "react";
 export default function ProductPage({ products, setProducts }) {
     const [form, setForm] = useState({ id: null, name: "", price: "" });
     const [isEditing, setIsEditing] = useState(false);
+    const [search, setSearch] = useState("");
 
     const handleSave = () => {
-        if (!form.name || !form.price) return alert("Fill All Fields");
+        if (!form.name || !form.price) return alert("Fill all fields");
 
         if (isEditing) {
             setProducts(products.map(p => p.id === form.id ? form : p));
@@ -26,6 +27,10 @@ export default function ProductPage({ products, setProducts }) {
         setProducts(products.filter(p => p.id !== id));
     };
 
+    const filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+    );
+
     return (
         <div>
             <h1 className="page-title">Product Manager</h1>
@@ -33,7 +38,7 @@ export default function ProductPage({ products, setProducts }) {
             <div className="card">
                 <h2>{isEditing ? "Edit Product" : "Add Product"}</h2>
 
-                <label>Product Name</label>
+                <label>Name</label>
                 <input 
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -47,12 +52,18 @@ export default function ProductPage({ products, setProducts }) {
                 />
 
                 <button onClick={handleSave}>
-                    {isEditing ? "Save Changes" : "Add Product"}
+                    {isEditing ? "Save" : "Add"}
                 </button>
             </div>
 
             <div className="card">
-                <h2>Product List</h2>
+                <h2>Products</h2>
+
+                <input 
+                    placeholder="Search product..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
 
                 <table className="table">
                     <thead>
@@ -62,9 +73,8 @@ export default function ProductPage({ products, setProducts }) {
                             <th style={{ width: "160px" }}>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        {products.map((p) => (
+                        {filteredProducts.map((p) => (
                             <tr key={p.id}>
                                 <td>{p.name}</td>
                                 <td>Rp{p.price}</td>
@@ -79,7 +89,6 @@ export default function ProductPage({ products, setProducts }) {
                             </tr>
                         ))}
                     </tbody>
-
                 </table>
             </div>
         </div>

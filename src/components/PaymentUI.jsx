@@ -9,6 +9,8 @@ export default function PaymentUI({ total }) {
 
     const handlePay = () => {
         try {
+            if (total <= 0) throw new Error("Cart is empty, cannot pay!");
+
             let pay;
 
             if (method === "cash") pay = new CashPayment(total);
@@ -26,7 +28,7 @@ export default function PaymentUI({ total }) {
             <h2>Payment</h2>
             <p>Total: <b>Rp{total}</b></p>
 
-            <label>Payment Method</label>
+            <label>Method</label>
             <select value={method} onChange={(e) => setMethod(e.target.value)}>
                 <option value="cash">Cash</option>
                 <option value="qris">QRIS</option>
@@ -35,7 +37,7 @@ export default function PaymentUI({ total }) {
 
             <button onClick={handlePay}>Pay Now</button>
 
-            {result && <p className="result">{result}</p>}
+            {result && <p style={{ marginTop: "10px"}}>{result}</p>}
         </div>
     );
 }

@@ -6,10 +6,13 @@ import "./ui.css";
 
 export default function App() {
     const [currentPage, setCurrentPage] = useState("dashboard");
+
     const [products, setProducts] = useState([
         { id: 1, name: "Nasi Goreng", price: 20000 },
         { id: 2, name: "Mie Ayam", price: 15000 }
     ]);
+
+    const [cart, setCart] = useState([]);
 
     return (
         <div className="layout">
@@ -17,7 +20,7 @@ export default function App() {
 
             <main className="content">
                 {currentPage === "dashboard" && (
-                    <Dashboard products={products} />
+                    <Dashboard products={products} cart={cart} setCart={setCart} />
                 )}
 
                 {currentPage === "product" && (
