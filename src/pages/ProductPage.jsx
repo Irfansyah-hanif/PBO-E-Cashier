@@ -6,6 +6,10 @@ export default function ProductPage({ products, setProducts }) {
     const [isEditing, setIsEditing] = useState(false);
     const [search, setSearch] = useState("");
 
+    // --- State baru untuk Filtering dan Sorting ---
+    const [filterCategory, setFilterCategory] = useState("All");
+    const [sortOrder, setSortOrder] = useState(""); // "" | "lowest" | "highest"
+
     const handleSave = () => {
         if (!form.name || !form.price || !form.category) return alert("Fill all fields");
 
@@ -31,14 +35,31 @@ export default function ProductPage({ products, setProducts }) {
         }
     };
 
-    const filteredProducts = products.filter(p =>
-        p.name.toLowerCase().includes(search.toLowerCase())
-    );
+    // --- Logika Filter & Sort Diperbarui ---
+    const filteredProducts = products
+        .filter(p => {
+            // 1. Filter Search
+            const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
+            // 2. Filter Category
+            const matchesCategory = filterCategory === "All" || p.category === filterCategory;
+            
+            return matchesSearch && matchesCategory;
+        })
+        .sort((a, b) => {
+            // 3. Sorting Price
+            if (sortOrder === "lowest") {
+                return a.price - b.price; // Rendah ke Tinggi
+            } else if (sortOrder === "highest") {
+                return b.price - a.price; // Tinggi ke Rendah
+            }
+            return 0; // Tidak ada sorting
+        });
 
     return (
         <div className="fade-in">
             <h1 className="page-title">Product Manager</h1>
 
+            {/* --- Form Section --- */}
             <div className="card">
                 <h2 className="card-header">{isEditing ? "Edit Product" : "Add New Product"}</h2>
                 <div className="form-grid">
@@ -62,7 +83,6 @@ export default function ProductPage({ products, setProducts }) {
                             <option value="Makanan">Makanan</option>
                             <option value="Minuman">Minuman</option>
                             <option value="Barang">Barang</option>
-                            <option value="Jasa">Jasa</option>
                         </select>
                     </div>
 
@@ -85,22 +105,54 @@ export default function ProductPage({ products, setProducts }) {
                     {isEditing && (
                         <button className="btn btn-secondary" onClick={() => {
                             setIsEditing(false);
-                            setForm({ id: null, name: "",Kfprice: "", category: "Makanan" });
+                            setForm({ id: null, name: "", price: "", category: "Makanan" });
                         }}>Cancel</button>
                     )}
                 </div>
             </div>
 
+            {/* --- List Section --- */}
             <div className="card">
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px", flexWrap: "wrap", gap: "10px" }}>
                     <h2>Product List</h2>
-                    <input 
-                        style={{ width: "250px" }}
-                        className="input-field"
-                        placeholder="Search product..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                    
+                    {/* Container untuk Search, Filter, dan Sort di sebelah kanan */}
+                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                        
+                        {/* Search Bar */}
+                        <input 
+                            style={{ width: "200px" }}
+                            className="input-field"
+                            placeholder="Search product..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+
+                        {/* Filter Category */}
+                        <select 
+                            className="input-field"
+                            style={{ width: "150px" }}
+                            value={filterCategory}
+                            onChange={(e) => setFilterCategory(e.target.value)}
+                        >
+                            <option value="All">All Categories</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Minuman">Minuman</option>
+                            <option value="Barang">Barang</option>
+                        </select>
+
+                        {/* Sort Price */}
+                        <select 
+                            className="input-field"
+                            style={{ width: "150px" }}
+                            value={sortOrder}
+                            onChange={(e) => setSortOrder(e.target.value)}
+                        >
+                            <option value="">Sort Price</option>
+                            <option value="lowest">Lowest Price</option>
+                            <option value="highest">Highest Price</option>
+                        </select>
+                    </div>
                 </div>
 
                 <table className="table">
@@ -109,7 +161,7 @@ export default function ProductPage({ products, setProducts }) {
                             <th>Name</th>
                             <th>Category</th>
                             <th>Price</th>
-                            <th style={{ width: "180px",OXtextAlign: "center" }}>Actions</th>
+                            <th style={{ width: "180px", textAlign: "center" }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
