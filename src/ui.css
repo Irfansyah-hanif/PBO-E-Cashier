@@ -1,0 +1,120 @@
+/* Layout */
+.layout {
+    display: flex;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #111827;
+    color: white;
+    padding: 25px;
+}
+
+.sidebar h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.sidebar li.active,
+.sidebar li:hover {
+    background: #2563eb;
+}
+
+/* CONTENT */
+.content {
+    flex: 1;
+    padding: 35px;
+    background: #f3f4f6;
+    overflow-y: auto;
+}
+
+.page-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    margin-bottom: 25px;
+}
+
+/* PRODUCT LIST */
+.product-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* INPUT */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+}
+
+button {
+    background: #2563eb;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.btn-danger {
+    background: #dc2626;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+.btn-edit {
+    background: #10b981;
+}
+
+.btn-edit:hover {
+    background: #059669;
+}
+
+/* TABLE */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}

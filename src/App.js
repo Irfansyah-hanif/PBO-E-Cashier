@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Dashboard from "./pages/Dashboard";
+import ProductPage from "./pages/ProductPage";
+import "./ui.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const [currentPage, setCurrentPage] = useState("dashboard");
+    const [products, setProducts] = useState([
+        { id: 1, name: "Nasi Goreng", price: 20000 },
+        { id: 2, name: "Mie Ayam", price: 15000 }
+    ]);
+
+    return (
+        <div className="layout">
+            <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
+            <main className="content">
+                {currentPage === "dashboard" && (
+                    <Dashboard products={products} />
+                )}
+
+                {currentPage === "product" && (
+                    <ProductPage products={products} setProducts={setProducts} />
+                )}
+            </main>
+        </div>
+    );
 }
-
-export default App;
