@@ -1,11 +1,12 @@
 import Payment from "./Payment";
 
 export default class CashPayment extends Payment {
-  pay(amount) {
-    if (amount <= 0) {
-      throw new Error("Amount must be greater than 0");
+    // Override method dari parent (Polymorphism)
+    processPayment() {
+        // Exception Handling
+        if (this.amount <= 0) {
+            throw new Error("Jumlah pembayaran tidak valid.");
+        }
+        return `Pembayaran Cash diterima: Rp${this.amount.toLocaleString()}`;
     }
-    console.log("Cash payment:", amount);
-    return true;
-  }
 }

@@ -8,33 +8,38 @@ export default function PaymentUI({ total, onSuccess }) {
     const [walletProvider, setWalletProvider] = useState("");
     const [error, setError] = useState("");
     
-    // State baru untuk Modal Zoom QRIS
+    // State untuk Modal Zoom QRIS
     const [showQRModal, setShowQRModal] = useState(false);
 
     const handlePay = () => {
         setError("");
         try {
+            // Exception Handling di level UI
             if (total <= 0) throw new Error("Cart is empty, cannot pay!");
 
             let pay;
             
             // --- PENERAPAN OOP (Factory Pattern) ---
             if (method === "cash") {
-                pay = new CashPayment(total); // Inheritance dari Payment
+                // Inheritance: Membuat object CashPayment dengan amount
+                pay = new CashPayment(total); 
             } else if (method === "qris") {
-                pay = new QRISPayment(total); // Inheritance dari Payment
+                // Inheritance: Membuat object QRISPayment dengan amount
+                pay = new QRISPayment(total); 
             } else if (method === "ewallet") {
-                pay = new EWalletPayment(total, walletProvider); // Inheritance dari Payment
+                // Inheritance: Membuat object EWalletPayment dengan amount & provider
+                pay = new EWalletPayment(total, walletProvider); 
             }
 
             // --- POLYMORPHISM ---
-            // Memanggil method yang sama (processPayment), tapi hasilnya beda tiap objek
+            // Kita memanggil .processPayment() tanpa peduli itu Cash, QRIS, atau EWallet.
+            // Masing-masing class akan menjalankan logikanya sendiri.
             const message = pay.processPayment();
             
             if (onSuccess) onSuccess(message);
 
         } catch (err) {
-            // --- EXCEPTION HANDLING ---
+            // Menangkap error dari class Payment dan menampilkannya
             setError(err.message);
         }
     };

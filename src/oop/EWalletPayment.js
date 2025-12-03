@@ -2,20 +2,20 @@ import Payment from "./Payment";
 
 export default class EWalletPayment extends Payment {
     constructor(amount, provider) {
-        super(amount);
+        super(amount); // Inheritance: Panggil constructor Payment
         this.provider = provider;
     }
 
-    // POLYMORPHISM: Implementasi spesifik untuk E-Wallet
+    // Override method dari parent (Polymorphism)
     processPayment() {
-        // EXCEPTION HANDLING: Cek validitas
+        // Exception Handling
         if (this.amount <= 0) {
-            throw new Error("Invalid amount.");
+            throw new Error("Jumlah pembayaran tidak valid.");
         }
         if (!this.provider) {
-            throw new Error("Silakan pilih jenis E-Wallet terlebih dahulu!");
+            throw new Error("Mohon pilih jenis E-Wallet terlebih dahulu!");
         }
 
-        return `Pembayaran via ${this.provider} berhasil: Rp${this.amount.toLocaleString()}`;
+        return `Pembayaran via ${this.provider} Berhasil: Rp${this.amount.toLocaleString()}`;
     }
 }
