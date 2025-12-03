@@ -422,6 +422,150 @@ select.input-field {
 }
 
 /* =========================================
+   PAYMENT UI SPECIFIC (QRIS & EWALLET)
+   ========================================= */
+
+/* Payment Method Tabs */
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.method-btn {
+    padding: 12px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 10px;
+    font-weight: 700;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.method-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.method-btn.active {
+    background: #e0e7ff;
+    color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+/* Content Area Container */
+.payment-content-area {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px dashed var(--border);
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center content */
+}
+
+/* Info Box (Cash) */
+.info-box {
+    text-align: center;
+    color: var(--text-dark);
+}
+
+/* QRIS Styling */
+.qris-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qris-wrapper {
+    position: relative;
+    cursor: zoom-in;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.qris-wrapper:hover {
+    transform: scale(1.03);
+}
+
+.qris-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: block;
+}
+
+/* Hint "🔍 Zoom" yang muncul saat hover */
+.qris-overlay-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none; /* Supaya klik tetap tembus ke wrapper */
+}
+
+.qris-wrapper:hover .qris-overlay-hint {
+    opacity: 1;
+}
+
+/* E-Wallet Grid (UPDATED FOR PROPORTION) */
+.wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+    gap: 12px; /* Sedikit lebih renggang */
+    width: 100%;
+}
+
+.wallet-btn {
+    padding: 14px 10px; /* Padding vertikal lebih besar */
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 12px; /* Radius lebih modern */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px; /* Tinggi minimum agar proporsional */
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.wallet-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.wallet-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+/* =========================================
    TABLE & BADGES
    ========================================= */
 .table { 
